@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "three-tvOS.app"
-               BlueprintName = "three-tvOS"
-               ReferencedContainer = "container:three.xcodeproj">
+               BuildableName = "reactNative2-tvOS.app"
+               BlueprintName = "reactNative2-tvOS"
+               ReferencedContainer = "container:reactNative2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "three-tvOSTests.xctest"
-               BlueprintName = "three-tvOSTests"
-               ReferencedContainer = "container:three.xcodeproj">
+               BuildableName = "reactNative2-tvOSTests.xctest"
+               BlueprintName = "reactNative2-tvOSTests"
+               ReferencedContainer = "container:reactNative2.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "three-tvOS.app"
-            BlueprintName = "three-tvOS"
-            ReferencedContainer = "container:three.xcodeproj">
+            BuildableName = "reactNative2-tvOS.app"
+            BlueprintName = "reactNative2-tvOS"
+            ReferencedContainer = "container:reactNative2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "three-tvOS.app"
-            BlueprintName = "three-tvOS"
-            ReferencedContainer = "container:three.xcodeproj">
+            BuildableName = "reactNative2-tvOS.app"
+            BlueprintName = "reactNative2-tvOS"
+            ReferencedContainer = "container:reactNative2.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

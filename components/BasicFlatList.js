@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FlatList, StyleSheet, Text, View, Image, Alert, Platform, TouchableHighlight } from 'react-native';
 import flatListData from '../data/flatListData';
 import Swipeout from 'react-native-swipeout';
 import ButtonAdd from '../assets/images/icons-add.png';
+import AddModal from './AddModal';
 
 const FlatListItem = ({item, index, refreshFlatList}) => {
     const [activeRowKey, setActiveRowKey] = useState(null);
@@ -96,12 +97,18 @@ const styles = StyleSheet.create({
 export default function BasicFlatList() {
     const [deletedRowKey, setDeletedRowKey] = useState(null);
 
-    function refreshFlatList(deletedKey) {
-        setDeletedRowKey(deletedKey);
+    // create our ref
+    const addModal = useRef();
+    const flatList = useRef();
+
+    function refreshFlatList(activatedKey) {
+        setDeletedRowKey(activatedKey);
+        // scroll flatlist to end
+        flatList.current.scrollToEnd();
     }
 
     function _onPressAdd () {
-        alert("You add Item");
+        addModal.current.showAddModal();
     }
 
     return (
@@ -125,6 +132,7 @@ export default function BasicFlatList() {
                 </TouchableHighlight>
             </View>
             <FlatList
+                ref={ flatList }
                 data={flatListData}
                 renderItem={({item, index}) => {
                     // console.log(`Item = ${JSON.stringify(item)}, Index = ${index}`)
@@ -136,6 +144,12 @@ export default function BasicFlatList() {
                 }}
             >
             </FlatList>
+
+            <AddModal
+                ref={ addModal }
+                refreshFlatList={refreshFlatList}
+            />
+
         </View>
     );
 }

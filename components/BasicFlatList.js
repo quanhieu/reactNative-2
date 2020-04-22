@@ -1,12 +1,23 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from 'react';
 import { FlatList, StyleSheet, Text, View, Image, Alert, Platform, TouchableHighlight } from 'react-native';
 import flatListData from '../data/flatListData';
 import Swipeout from 'react-native-swipeout';
 import ButtonAdd from '../assets/images/icons-add.png';
 import AddModal from './AddModal';
+import EditModal from './EditModal';
+import randomStr from 'random-string';
 
-const FlatListItem = ({item, index, refreshFlatList}) => {
+const FlatListItem = ({item, index, refreshFlatList, openEdit}) => {
     const [activeRowKey, setActiveRowKey] = useState(null);
+    const [foodItem, setFoodItem] = useState({});
+
+    const load = useCallback(() => {
+        setFoodItem(item);
+    } , [setFoodItem])
+
+    useEffect(() => {
+        setFoodItem(item);
+    }, [setFoodItem])
 
     const swipeSettings = {
         autoClose: true,
@@ -18,35 +29,44 @@ const FlatListItem = ({item, index, refreshFlatList}) => {
         },
         // swipe left to right
         onOpen: (secId, rowId, direction) => {
-            setActiveRowKey(item.key)
+            setActiveRowKey(foodItem.key)
         },
         // setting button on right
-        right: [{
-            onPress: () => {
-                Alert.alert(
-                    'Alert',
-                    'Are you sure want to delete ?',
-                    [
-                        {
-                            text: 'No',
-                            onPress: () => console.log('Cancel Pressed'),
-                            style: 'cancel'
-                        },
-                        {
-                            text: 'Yes',
-                            onPress: () => {
-                                flatListData.splice(index, 1);
-                                //Refresh FlatList !
-                                refreshFlatList(activeRowKey);
-                            }
-                        }
-                    ],
-                    { cancelable: true }
-                )
+        right: [
+            {
+                onPress: () => {
+                    openEdit(foodItem);
+                },
+                text: 'Edit',
+                type: 'primary'
             },
-            text: 'Delete',
-            type: 'delete'
-        }],
+            {
+                onPress: () => {
+                    Alert.alert(
+                        'Alert',
+                        'Are you sure want to delete ?',
+                        [
+                            {
+                                text: 'No',
+                                onPress: () => console.log('Cancel Pressed'),
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Yes',
+                                onPress: () => {
+                                    flatListData.splice(index, 1);
+                                    //Refresh FlatList !
+                                    refreshFlatList(activeRowKey);
+                                }
+                            }
+                        ],
+                        { cancelable: true }
+                    )
+                },
+                text: 'Delete',
+                type: 'delete'
+            }
+        ],
         rowId: index,
         sectionId: 1
     };
@@ -64,15 +84,15 @@ const FlatListItem = ({item, index, refreshFlatList}) => {
                     // backgroundColor: index % 2 === 0 ? 'mediumseagreen': 'tomato'
                 }}>
                     <Image
-                        source={{ uri: item.imageUrl }}
+                        source={{ uri: foodItem.imageUrl }}
                         style={{ width: 100, height: 100, margin: 5 }}
                     />
                     <View style={{
                         flex: 1,
                         flexDirection: 'column'
                     }}>
-                        <Text style={styles.flatListItem}>{item.name}</Text>
-                        <Text style={styles.flatListItem}>{item.foodDescription}</Text>
+                        <Text style={styles.flatListItem}>{foodItem.name}</Text>
+                        <Text style={styles.flatListItem}>{foodItem.foodDescription}</Text>
                     </View>
                 </View>
 
@@ -99,6 +119,7 @@ export default function BasicFlatList() {
 
     // create our ref
     const addModal = useRef();
+    const editModal = useRef();
     const flatList = useRef();
 
     function refreshFlatList(activatedKey) {
@@ -109,6 +130,16 @@ export default function BasicFlatList() {
 
     function _onPressAdd () {
         addModal.current.showAddModal();
+    }
+
+    function _onPressOpenEdit(foodItem) {
+        editModal.current.showEditModal(foodItem);
+    }
+
+    function hdSaveEdit(index, foodItemData) {
+        // editModal.current.saveEditModal(setFoodItem, foodItem);
+        flatListData.splice(index, 1, foodItemData);
+        setDeletedRowKey(Math.random());
     }
 
     return (
@@ -137,8 +168,12 @@ export default function BasicFlatList() {
                 renderItem={({item, index}) => {
                     // console.log(`Item = ${JSON.stringify(item)}, Index = ${index}`)
                     return (
-                        <FlatListItem item={item} index={index} refreshFlatList={refreshFlatList}>
-
+                        <FlatListItem
+                            item={item}
+                            index={index}
+                            refreshFlatList={refreshFlatList}
+                            openEdit={_onPressOpenEdit}
+                        >
                         </FlatListItem>
                     )
                 }}
@@ -150,6 +185,10 @@ export default function BasicFlatList() {
                 refreshFlatList={refreshFlatList}
             />
 
+            <EditModal
+                ref={ editModal }
+                hdSaveEdit={hdSaveEdit}
+            />
         </View>
     );
 }

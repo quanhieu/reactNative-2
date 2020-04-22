@@ -1,11 +1,12 @@
 import React, { useState, useRef, useCallback, useEffect, useImperativeHandle } from 'react';
-import { FlatList, StyleSheet, Text, View, Image, Alert, Platform, TouchableHighlight } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Image, Alert, Platform, TouchableHighlight, Button } from 'react-native';
 import flatListData from '../data/flatListData';
 import Swipeout from 'react-native-swipeout';
 import ButtonAdd from '../assets/images/icons-add.png';
 import AddModal from './AddModal';
 import EditModal from './EditModal';
-import randomStr from 'random-string';
+import Weather from './HorizontalFlatList';
+
 
 const FlatListItem = ({item, index, refreshFlatList, openEdit}) => {
     const [activeRowKey, setActiveRowKey] = useState(null);
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
 
 export default function BasicFlatList() {
     const [deletedRowKey, setDeletedRowKey] = useState(null);
+    const [show, setShow] = useState(true)
 
     // create our ref
     const addModal = useRef();
@@ -142,53 +144,67 @@ export default function BasicFlatList() {
         setDeletedRowKey(Math.random());
     }
 
+    function hdWeather() {
+        setShow(false);
+    }
+
     return (
-        <View style={{ flex:1 , marginTop: Platform.OS === 'ios' ? 34 : 0 }}>
-            <View style={{
-                backgroundColor: 'tomato',
-                flexDirection: 'row',
-                justifyContent:'flex-end',
-                alignItems: 'center',
-                height: 55
-            }}>
-                <TouchableHighlight
-                    style={{marginRight: 10}}
-                    underlayColor='tomato'
-                    onPress={_onPressAdd}
-                >
-                    <Image
-                        style={{width: 35, height: 35}}
-                        source={ButtonAdd}
-                    />
-                </TouchableHighlight>
-            </View>
-            <FlatList
-                ref={ flatList }
-                data={flatListData}
-                renderItem={({item, index}) => {
-                    // console.log(`Item = ${JSON.stringify(item)}, Index = ${index}`)
-                    return (
-                        <FlatListItem
-                            item={item}
-                            index={index}
-                            refreshFlatList={refreshFlatList}
-                            openEdit={_onPressOpenEdit}
+        <>
+            {
+                show
+                ? <View style={{ flex:1 , marginTop: Platform.OS === 'ios' ? 34 : 0 }}>
+                    <View style={{
+                        backgroundColor: 'tomato',
+                        flexDirection: 'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        height: 55
+                    }}>
+                        <TouchableHighlight
+                            style={{marginRight: 10}}
+                            underlayColor='tomato'
+                            onPress={_onPressAdd}
                         >
-                        </FlatListItem>
-                    )
-                }}
-            >
-            </FlatList>
+                            <Image
+                                style={{width: 35, height: 35}}
+                                source={ButtonAdd}
+                            />
+                        </TouchableHighlight>
+                        <Button
+                            title="Weather"
+                            onPress={hdWeather}
+                        />
+                    </View>
+                    <FlatList
+                        ref={ flatList }
+                        data={flatListData}
+                        renderItem={({item, index}) => {
+                            // console.log(`Item = ${JSON.stringify(item)}, Index = ${index}`)
+                            return (
+                                <FlatListItem
+                                    item={item}
+                                    index={index}
+                                    refreshFlatList={refreshFlatList}
+                                    openEdit={_onPressOpenEdit}
+                                >
+                                </FlatListItem>
+                            )
+                        }}
+                    >
+                    </FlatList>
 
-            <AddModal
-                ref={ addModal }
-                refreshFlatList={refreshFlatList}
-            />
+                    <AddModal
+                        ref={ addModal }
+                        refreshFlatList={refreshFlatList}
+                    />
 
-            <EditModal
-                ref={ editModal }
-                hdSaveEdit={hdSaveEdit}
-            />
-        </View>
+                    <EditModal
+                        ref={ editModal }
+                        hdSaveEdit={hdSaveEdit}
+                    />
+                </View>
+                : <Weather/>
+            }
+        </>
     );
 }

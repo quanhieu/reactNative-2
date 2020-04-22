@@ -1,4 +1,4 @@
-var flatListData = [
+let flatListData = [
     {
         "key": "598a678278fee204ee51cd2c",
         "name": "Cream Tea",

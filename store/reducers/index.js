@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import counterReducers from './CounterReducers';
+import movieReducers from './movieReducers';
 
 const rootReducers = combineReducers({
-    counterReducers,
+    movieReducers,
     //you can add more reducers here, separated by , !
 });
 

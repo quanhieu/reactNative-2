@@ -1,0 +1,75 @@
+{
+    "data": {
+    "result": "ok",
+    "count": 13,
+    "message": "Request successfully",
+    "status": 200,
+    "data": [
+            {
+                "id": 1,
+                "name": "The ghost and the darkness",
+                "releaseYear": 1996
+            },
+            {
+                "id": 2,
+                "name": "The blind side",
+                "releaseYear": 2009
+            },
+            {
+                "id": 3,
+                "name": "Star wars",
+                "releaseYear": 1977
+            },
+            {
+                "id": 4,
+                "name": "Back to the future",
+                "releaseYear": 1985
+            },
+            {
+                "id": 5,
+                "name": "The matrix",
+                "releaseYear": 2010
+            },
+            {
+                "id": 6,
+                "name": "Inception",
+                "releaseYear": 2007
+            },
+            {
+                "id": 7,
+                "name": "Freedom writers",
+                "releaseYear": 2007
+            },
+            {
+                "id": 8,
+                "name": "Apolo 13",
+                "releaseYear": 1995
+            },
+            {
+                "id": 9,
+                "name": "Lone Survivor",
+                "releaseYear": 2013
+            },
+            {
+                "id": 10,
+                "name": "All the President's men",
+                "releaseYear": 1976
+            },
+            {
+                "id": 11,
+                "name": "Walk the Line",
+                "releaseYear": 2005
+            },
+            {
+                "id": 12,
+                "name": "Catch me if you can",
+                "releaseYear": 2002
+            },
+            {
+                "id": 13,
+                "name": "Gorillas in the Mist",
+                "releaseYear": 1988
+            }
+        ]
+    }
+}

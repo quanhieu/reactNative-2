@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import taskReducers from './taskReducers';
+import counterReducers from './CounterReducers';
 
 const rootReducers = combineReducers({
-    taskReducers,
+    counterReducers,
     //you can add more reducers here, separated by , !
 });
 

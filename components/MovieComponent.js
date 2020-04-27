@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'react-native-button';
+import FlatListItem from './FlatListItem';
+import EditModal from './EditModal';
 
 import { Text, View, Platform, TextInput, FlatList } from 'react-native';
 
@@ -55,18 +57,12 @@ export default class MovieComponent extends Component {
                 </View>
                 <FlatList
                     data={this.props.movies}
-                    keyExtractor={(item) => item.name}
-                    renderItem={({ item, index }) => <Text style={{
-                        padding: 10,
-                        fontWeight: 'bold',
-                        fontSize: 17,
-                        color: 'white',
-                        backgroundColor: (index % 2 === 0) ? 'dodgerblue' : 'mediumseagreen'
-                    }}>
-                        {`${item.name},releaseYear=${item.releaseYear}`}
-                    </Text>
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item, index }) => <FlatListItem {...item} itemIndex={index} movieComponent={this}/>
+
                     }
                 />
+                <EditModal ref={'editModal'} movieComponent={this}/>
             </View>
         );
     }
